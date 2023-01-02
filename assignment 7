@@ -1,0 +1,85 @@
+#include<bits/stdc++.h>
+using namespace std;
+void bfs(int, int);
+void dfs(int, int);
+void dfs_rec(int, int);
+int g[5][5]={{0,1,0,0,1},
+             {1,0,1,1,1},
+             {0,1,0,1,0},
+             {0,1,1,0,1},
+             {1,1,0,1,0}};
+int main()
+{
+    cout<<"BFS search is:"<<endl;
+    bfs(0,5);
+    cout<<"DFS search is:"<<endl;
+    dfs(0,5);
+    cout<<"DFS recursion is:"<<endl;
+    dfs_rec(0,0);
+    return 0;
+}
+void bfs(int temp, int n)
+{
+    queue<int> q;
+    int visited[n]={0};
+    cout<<temp<<" ";
+    visited[temp]=1;
+    q.push(temp);
+    int i;
+    while(!q.empty()){
+        temp=q.front();
+        q.pop();
+        for(i=0; i<n; i++)
+        {
+            if(visited[i]==0 && g[temp][i]==1){
+                cout<<i<<" ";
+                q.push(i);
+                visited[i]=1;
+            }
+        }
+    }
+    cout<<endl;
+}
+void dfs(int temp, int n)
+{
+    queue<int> qu;
+    stack<int> ans;
+    int visited[n]={0};
+    int i;
+    visited[temp]=1;
+    qu.push(temp);
+    ans.push(temp);
+    while(!qu.empty()){
+        temp=qu.front();
+        qu.pop();
+        for(i=0; i<n; i++)
+        {
+            if(visited[i]==0 && g[temp][i]==1){
+                qu.push(i);
+                ans.push(i);
+                visited[i]=1;
+            }
+        }
+    }
+    while(!ans.empty()){
+        cout<<ans.top()<<" ";
+        ans.pop();
+    }
+    cout<<endl;
+}
+int v[5]={0};
+void dfs_rec(int temp, int n)
+{
+    if(n==5){
+        return;
+    }
+    int i;
+    for(i=0; i<5; i++)
+    {
+        if(v[i]==0 && g[temp][i]==1){
+            v[i]=1;
+            dfs_rec(i,n+1);
+            cout<<i<<" ";
+        }
+    }
+}
